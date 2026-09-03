@@ -1,285 +1,797 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portofolio - Alief Sandya</title>
-    <style>
-        /* Pengaturan Dasar */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>💌 Ada sesuatu untuk kamu...</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET & BASE ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0a0505; /* Latar hitam kemerahan gelap */
-            overflow: hidden;
-            cursor: none; 
-        }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ffdde1 0%, #f9c9e2 30%, #d8b4fe 70%, #b3c7f9 100%);
+      background-size: 300% 300%;
+      animation: gradientShift 18s ease infinite;
+      font-family: 'Manrope', system-ui, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      position: relative;
+      overflow-x: hidden;
+      touch-action: manipulation;
+      padding-bottom: 5.5rem;
+    }
 
-        /* =========================================
-           EFEK KURSOR API NAGA (DESKTOP)
-           ========================================= */
-        #cursor {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 250px;
-            height: 250px;
-            /* Cahaya api (merah ke oranye) */
-            background: radial-gradient(circle, rgba(255, 69, 0, 0.3) 0%, rgba(255, 0, 0, 0) 70%);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 10;
-            mix-blend-mode: screen;
-        }
+    body::before,
+    body::after {
+      content: '';
+      position: fixed;
+      pointer-events: none;
+      z-index: 2;
+    }
 
-        #cursor-dot {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 12px;
-            height: 12px;
-            background-color: #ffdd00; /* Inti api berwarna kuning terang */
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 12;
-            box-shadow: 0 0 10px #ffea00, 0 0 20px #ff4500, 0 0 40px #ff0000;
-        }
+    body::before {
+      inset: 0;
+      opacity: 0.22;
+      background-image: radial-gradient(rgba(255,255,255,0.55) 0.7px, transparent 0.7px);
+      background-size: 9px 9px;
+      mix-blend-mode: soft-light;
+    }
 
-        /* Partikel Jejak Api */
-        .fire-particle {
-            position: fixed;
-            border-radius: 50%;
-            background: radial-gradient(circle, #ffeb3b 0%, #ff9800 40%, #f44336 80%, transparent 100%);
-            pointer-events: none;
-            mix-blend-mode: screen;
-            z-index: 11;
-            animation: burn 0.6s ease-out forwards;
-        }
+    body::after {
+      width: 42vw;
+      height: 42vw;
+      min-width: 280px;
+      min-height: 280px;
+      top: -20vw;
+      right: -12vw;
+      border: 1px solid rgba(255,255,255,0.32);
+      border-radius: 50%;
+      box-shadow: 0 0 0 24px rgba(255,255,255,0.08), 0 0 0 48px rgba(255,255,255,0.05);
+    }
 
-        @keyframes burn {
-            0% { transform: scale(1) translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: scale(0) translateY(-60px) rotate(45deg); opacity: 0; }
-        }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
-        /* =========================================
-           LATAR BELAKANG (AURA MEMBARA)
-           ========================================= */
-        .shape {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(90px);
-            z-index: 1;
-            animation: floatShape 10s infinite ease-in-out;
-        }
+    /* ===== FLOATING ELEMENTS BACKGROUND ===== */
+    .bg-elements {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
 
-        .shape1 {
-            width: 450px;
-            height: 450px;
-            background: linear-gradient(135deg, #ff0844, #ffb199);
-            top: 5%;
-            left: 10%;
-        }
+    .bg-heart, .bg-sparkle, .bg-confetti {
+      position: absolute;
+      bottom: -60px;
+      opacity: 0.8;
+      animation: floatUp linear infinite;
+      will-change: transform, opacity;
+    }
 
-        .shape2 {
-            width: 500px;
-            height: 500px;
-            background: linear-gradient(135deg, #f12711, #f5af19);
-            bottom: -10%;
-            right: 5%;
-            animation-delay: -5s;
-        }
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(0.7) rotate(0deg);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-120vh) scale(1.2) rotate(15deg);
+        opacity: 0;
+      }
+    }
 
-        /* =========================================
-           KARTU GLASSMORPHISM 3D
-           ========================================= */
-        .card-container {
-            perspective: 1500px;
-            z-index: 5;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
+    /* ===== MAIN CARD ===== */
+    .card {
+      position: relative;
+      z-index: 10;
+      max-width: 600px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 32px;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.08), 0 12px 24px rgba(255, 105, 180, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: cardFloat 5s ease-in-out infinite;
+      overflow: hidden;
+    }
 
-        .glass-card {
-            background: rgba(20, 5, 5, 0.4); /* Kaca dengan tint merah gelap */
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 100, 100, 0.2);
-            border-radius: 24px;
-            padding: 70px 90px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6),
-                        inset 0 1px 0 rgba(255, 200, 200, 0.2);
-            text-align: center;
-            transform-style: preserve-3d;
-            transition: transform 0.1s ease-out;
-            width: 90%;
-            max-width: 600px;
-        }
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 24px;
+      pointer-events: none;
+    }
 
-        /* Copywriting / Teks */
-        .badge {
-            display: inline-block;
-            font-size: 0.9rem;
-            color: #ff9800;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            margin-bottom: 20px;
-            padding: 8px 15px;
-            border-radius: 30px;
-            background: rgba(255, 69, 0, 0.1);
-            border: 1px solid rgba(255, 69, 0, 0.3);
-            transform: translateZ(50px);
-        }
+    .card::after {
+      content: '✦  ⋆  ✦';
+      position: absolute;
+      top: 1.25rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(180, 59, 110, 0.55);
+      font-size: 0.75rem;
+      letter-spacing: 0.8rem;
+    }
 
-        .glass-card p.name {
-            font-size: 4.5rem;
-            font-weight: 900;
-            margin: 0 0 15px 0;
-            background: linear-gradient(to right, #ffffff, #ffb199, #ff0844);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            transform: translateZ(90px);
-            text-shadow: 0 15px 30px rgba(0,0,0,0.4);
-        }
+    @keyframes cardFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
 
-        .tagline {
-            font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.8);
-            letter-spacing: 1px;
-            line-height: 1.6;
-            transform: translateZ(60px);
-        }
+    .card.zoom-in {
+      animation: cardZoom 0.6s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+    }
 
-        @keyframes floatShape {
-            0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
-            50% { transform: translateY(-30px) scale(1.05) rotate(5deg); }
-        }
+    @keyframes cardZoom {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1.02); }
+    }
 
-        /* =========================================
-           RESPONSIF (UNTUK HP)
-           ========================================= */
-        @media (max-width: 768px) {
-            .glass-card { padding: 50px 30px; border-radius: 20px; }
-            .badge { font-size: 0.7rem; transform: translateZ(30px); }
-            .glass-card p.name { font-size: 3rem; transform: translateZ(60px); }
-            .tagline { font-size: 0.9rem; transform: translateZ(40px); }
-            .shape1 { width: 250px; height: 250px; top: 0; left: -10%; }
-            .shape2 { width: 300px; height: 300px; bottom: 0; right: -10%; }
-        }
+    .card.shake {
+      animation: cardShake 0.5s ease;
+    }
 
-        /* Nonaktifkan Kursor Khusus di HP */
-        @media (pointer: coarse), (hover: none) {
-            #cursor, #cursor-dot, .fire-particle { display: none !important; }
-            body { cursor: auto; }
-        }
-    </style>
+    @keyframes cardShake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-6px) rotate(-1deg); }
+      40% { transform: translateX(6px) rotate(1deg); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
+    }
+
+    /* ===== CHARACTER AREA ===== */
+    .character-box {
+      margin: 0 auto 1.2rem;
+      width: 130px;
+      height: 130px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5.8rem;
+      transition: transform 0.3s ease;
+      filter: drop-shadow(0 10px 12px rgba(0,0,0,0.06));
+    }
+
+    .character-box.bounce-char {
+      animation: charBounce 0.6s ease;
+    }
+
+    @keyframes charBounce {
+      0%, 100% { transform: scale(1); }
+      30% { transform: scale(0.9) rotate(-5deg); }
+      60% { transform: scale(1.15) rotate(5deg); }
+    }
+
+    /* ===== HEADINGS & TEXT ===== */
+    h1 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2.8rem;
+      font-weight: 600;
+      color: #4a2c3f;
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.01em;
+    }
+
+    .sub-text {
+      font-size: 1.25rem;
+      color: #5e3a4b;
+      margin-bottom: 1.4rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+
+    .message-box {
+      min-height: 65px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      color: #7e4a5e;
+      font-weight: 600;
+      margin: 0.8rem 0;
+      transition: all 0.2s;
+    }
+
+    .final-message {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #b43b6e;
+      margin: 0.6rem 0;
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      justify-content: center;
+      align-items: center;
+      margin: 1.8rem 0 0.8rem;
+      position: relative;
+    }
+
+    .btn {
+      border: none;
+      background: white;
+      padding: 0.95rem 2rem;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      white-space: nowrap;
+      transform: scale(1);
+      will-change: transform, opacity;
+      touch-action: manipulation;
+    }
+
+    .btn-accept {
+      background: linear-gradient(135deg, #ff6f9d, #e85691);
+      color: white;
+      box-shadow: 0 10px 22px rgba(232, 86, 145, 0.35);
+      font-size: 1.4rem;
+      padding: 1.05rem 2.4rem;
+    }
+
+    .btn-deny {
+      background: #f7d6e6;
+      color: #7c4d62;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+      font-size: 1.15rem;
+      padding: 0.85rem 1.6rem;
+    }
+
+    .btn:hover {
+      filter: brightness(1.06);
+      transform: translateY(-3px);
+    }
+
+    .btn:active {
+      transform: scale(0.95);
+    }
+
+    /* ===== STATES ===== */
+    .hidden {
+      display: none !important;
+    }
+
+    .fade-out {
+      opacity: 0;
+      transform: scale(0.2);
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.4s;
+    }
+
+    .gift-btn {
+      background: linear-gradient(135deg, #aa83f5, #8d69d8);
+      color: white;
+      padding: 1rem 2.2rem;
+      margin-top: 0.5rem;
+      font-size: 1.25rem;
+      box-shadow: 0 10px 22px rgba(141, 105, 216, 0.35);
+    }
+
+    /* ===== TYPING EFFECT ===== */
+    .typing-text {
+      display: inline-block;
+      border-right: 3px solid #ff7aa8;
+      padding-right: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      animation: blinkCursor 0.8s step-end infinite;
+    }
+
+    @keyframes blinkCursor {
+      0%, 100% { border-color: #ff7aa8; }
+      50% { border-color: transparent; }
+    }
+
+    /* ===== BIG HEARTS ===== */
+    .big-hearts {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    .big-heart {
+      position: absolute;
+      bottom: 0;
+      font-size: 2.5rem;
+      animation: bigHeartUp 3s ease-in forwards;
+      will-change: transform, opacity;
+    }
+
+    @keyframes bigHeartUp {
+      0% {
+        transform: translateY(0) scale(0.5);
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(-80vh) scale(1.6) rotate(20deg);
+        opacity: 0;
+      }
+    }
+
+    /* ===== ENVELOPE SURPRISE ===== */
+    .envelope-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1.2rem;
+      animation: fadeInEnvelope 0.5s ease;
+    }
+
+    @keyframes fadeInEnvelope {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== SOUND DOCK ===== */
+    .sound-dock {
+      position: fixed;
+      left: 50%;
+      bottom: max(1.2rem, env(safe-area-inset-bottom));
+      transform: translateX(-50%);
+      z-index: 20;
+      width: min(350px, calc(100% - 2rem));
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.75rem 1rem;
+      border: 1px solid rgba(255,255,255,0.6);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.45);
+      box-shadow: 0 14px 32px rgba(91, 39, 83, 0.18);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .sound-button {
+      width: 42px;
+      height: 42px;
+      flex: 0 0 42px;
+      border: 0;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #b43b6e, #922b55);
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(180,59,110,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      transition: transform 0.2s ease;
+    }
+
+    .sound-button:hover {
+      transform: scale(1.05);
+    }
+
+    .sound-copy { min-width: 0; text-align: left; color: #6b3f55; }
+    .sound-copy strong { display: block; font-size: 0.78rem; font-weight: 700; }
+    .sound-copy span { display: block; font-size: 0.68rem; opacity: 0.8; }
+    
+    .sound-bars { display: flex; align-items: center; gap: 3px; margin-left: auto; height: 22px; }
+    .sound-bars i { width: 3px; height: 9px; border-radius: 4px; background: #b43b6e; animation: soundBars 0.8s ease-in-out infinite alternate; }
+    .sound-bars i:nth-child(2) { height: 18px; animation-delay: -0.25s; }
+    .sound-bars i:nth-child(3) { height: 13px; animation-delay: -0.5s; }
+    .sound-bars.paused i { animation-play-state: paused; }
+    
+    #youtube-player { position: fixed; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+
+    @keyframes soundBars { from { transform: scaleY(0.4); } to { transform: scaleY(1.15); } }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 480px) {
+      .card {
+        width: min(100%, 390px);
+        padding: 2.2rem 1.2rem 1.8rem;
+        border-radius: 28px;
+        margin: 0.5rem 0 1rem;
+      }
+      h1 {
+        font-size: 2.3rem;
+      }
+      .btn {
+        font-size: 1.05rem;
+        padding: 0.8rem 1.4rem;
+      }
+      .btn-accept {
+        font-size: 1.25rem;
+        padding: 0.9rem 1.8rem;
+      }
+      .character-box {
+        width: 100px;
+        height: 100px;
+        font-size: 4.5rem;
+      }
+      .sub-text { font-size: 1.05rem; }
+      .message-box { min-height: 58px; font-size: 1.05rem; line-height: 1.5; }
+      .btn-group { flex-direction: column; gap: 0.9rem; }
+      .btn { width: min(100%, 260px); }
+      .sound-dock { bottom: max(0.8rem, env(safe-area-inset-bottom)); }
+    }
+  </style>
 </head>
 <body>
-    
-    <div id="cursor-dot"></div>
-    <div id="cursor"></div>
 
-    <div class="shape shape1"></div>
-    <div class="shape shape2"></div>
+  <div class="bg-elements" id="bgElements"></div>
 
-    <div class="card-container">
-        <div class="glass-card" id="card">
-            <span class="badge">✦ The Digital Craftsman ✦</span>
-            <p class="name">Alief Sandya</p>
-            <p class="tagline">Mengubah percikan ide menjadi realitas digital yang membara. Merancang masa depan baris demi baris.</p>
-        </div>
+  <div class="big-hearts" id="bigHeartsContainer"></div>
+
+  <div class="card" id="mainCard">
+    <div class="character-box" id="characterBox">
+      🥰
     </div>
 
-    <script>
-        const card = document.getElementById('card');
-        const cursorDot = document.getElementById('cursor-dot');
-        const cursorGlow = document.getElementById('cursor');
+    <h1 id="mainTitle">Hai kamu... ❤️</h1>
+    <div class="sub-text" id="subTitle">Aku punya sesuatu yang mau aku tanyain nih...</div>
+    <div class="message-box" id="questionText">Maukah kamu jadi orang yang selalu nemenin aku? 🥺💕</div>
 
-        // Fungsi Rotasi 3D
-        function animateCard(clientX, clientY) {
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight / 2;
-            const rotateX = ((clientY - centerY) / centerY) * -15; 
-            const rotateY = ((clientX - centerX) / centerX) * 15;  
-            card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        }
+    <div class="btn-group" id="btnGroup">
+      <button class="btn btn-accept" id="btnAccept">💗 TERIMA</button>
+      <button class="btn btn-deny" id="btnDeny">😝 TOLAK</button>
+    </div>
 
-        // Fungsi Membuat Partikel Api
-        function createFireParticle(x, y) {
-            const particle = document.createElement('div');
-            particle.className = 'fire-particle';
-            
-            // Ukuran partikel acak agar terlihat seperti kobaran api alami
-            const size = Math.random() * 20 + 10; 
-            particle.style.width = `${size}px`;
-            particle.style.height = `${size}px`;
-            
-            // Posisi di tengah kursor
-            particle.style.left = `${x - size / 2}px`;
-            particle.style.top = `${y - size / 2}px`;
-            
-            document.body.appendChild(particle);
-            
-            // Hapus partikel setelah animasinya selesai
-            setTimeout(() => {
-                particle.remove();
-            }, 600);
-        }
+    <div class="message-box" id="denyMessage"></div>
+  </div>
 
-        // Variabel untuk mengontrol seberapa sering partikel keluar (agar tidak lag)
-        let lastParticleTime = 0;
+  <div class="sound-dock" aria-label="Kontrol soundtrack">
+    <button class="sound-button" id="soundButton" aria-label="Putar soundtrack"><span>▶</span></button>
+    <div class="sound-copy">
+      <strong>Soundtrack untuk kamu</strong>
+      <span>Scene 02:08 - 02:40</span>
+    </div>
+    <div class="sound-bars paused" id="soundBars" aria-hidden="true"><i></i><i></i><i></i></div>
+  </div>
 
-        // Kontrol Mouse (Desktop)
-        window.addEventListener('mousemove', (e) => {
-            if (window.matchMedia("(pointer: fine)").matches) {
-                // Pergerakan Kursor Inti
-                cursorDot.style.left = `${e.clientX}px`;
-                cursorDot.style.top = `${e.clientY}px`;
-                
-                // Pergerakan Glow
-                cursorGlow.animate({
-                    left: `${e.clientX}px`,
-                    top: `${e.clientY}px`
-                }, { duration: 400, fill: "forwards" });
+  <div id="youtube-player" aria-hidden="true"></div>
+  <script src="https://www.youtube.com/iframe_api"></script>
 
-                // Generate Partikel Api (Dibatasi waktu agar performa tetap ringan)
-                const currentTime = Date.now();
-                if (currentTime - lastParticleTime > 20) { // Keluarkan partikel setiap 20ms
-                    createFireParticle(e.clientX, e.clientY);
-                    lastParticleTime = currentTime;
-                }
-            }
-            animateCard(e.clientX, e.clientY);
+  <script>
+    (function() {
+      const CONFIG = {
+        namaPanggilan: 'kamu',
+        pesanPenutup: 'Semoga kita selalu bisa saling menemani, saling support, dan membuat banyak cerita indah bersama. 💕',
+        akhirPesan: 'Aku sayang kamu. ❤️'
+      };
+
+      const card = document.getElementById('mainCard');
+      const characterBox = document.getElementById('characterBox');
+      const mainTitle = document.getElementById('mainTitle');
+      const subTitle = document.getElementById('subTitle');
+      const questionText = document.getElementById('questionText');
+      const btnGroup = document.getElementById('btnGroup');
+      const btnAccept = document.getElementById('btnAccept');
+      const btnDeny = document.getElementById('btnDeny');
+      const denyMessage = document.getElementById('denyMessage');
+      const bgElements = document.getElementById('bgElements');
+      const bigHeartsContainer = document.getElementById('bigHeartsContainer');
+      const soundButton = document.getElementById('soundButton');
+      const soundBars = document.getElementById('soundBars');
+      
+      let soundtrackPlayer;
+      let soundtrackTimer;
+      const soundtrackStart = 128;
+      const soundtrackEnd = 160;
+      let isInitialized = false;
+
+      window.onYouTubeIframeAPIReady = function() {
+        soundtrackPlayer = new YT.Player('youtube-player', {
+          videoId: '3UdVruU2qGc',
+          playerVars: { start: soundtrackStart, end: soundtrackEnd, controls: 0, rel: 0, playsinline: 1 },
+          events: { 
+            onReady: () => {
+              // Siap diputar lewat interaksi user
+            }, 
+            onStateChange: updateSoundState 
+          }
         });
+      };
 
-        // Kontrol Sentuh (HP)
-        window.addEventListener('touchmove', (e) => {
-            if (e.target.closest('.glass-card')) e.preventDefault(); 
-            const touch = e.touches[0];
-            animateCard(touch.clientX, touch.clientY);
-        }, { passive: false });
+      function triggerAudioPlayback() {
+        if (!soundtrackPlayer || typeof soundtrackPlayer.playVideo !== 'function') return;
+        if (!isInitialized) {
+          soundtrackPlayer.seekTo(soundtrackStart, true);
+          isInitialized = true;
+        }
+        if (soundtrackPlayer.getPlayerState() !== YT.PlayerState.PLAYING) {
+          soundtrackPlayer.playVideo();
+        }
+        clearInterval(soundtrackTimer);
+        soundtrackTimer = setInterval(() => {
+          if (soundtrackPlayer && typeof soundtrackPlayer.getCurrentTime === 'function') {
+            if (soundtrackPlayer.getCurrentTime() >= soundtrackEnd) {
+              soundtrackPlayer.seekTo(soundtrackStart, true);
+              soundtrackPlayer.playVideo();
+            }
+          }
+        }, 250);
+      }
 
-        // Reset Posisi
-        function resetCard() {
-            card.style.transform = `rotateX(0deg) rotateY(0deg)`;
-            card.style.transition = 'transform 0.5s ease';
+      function handleFirstTouch(event) {
+        if (event && event.target.closest('button')) return;
+        triggerAudioPlayback();
+        document.removeEventListener('pointerdown', handleFirstTouch);
+      }
+
+      document.addEventListener('pointerdown', handleFirstTouch, { passive: true });
+
+      function updateSoundState(event) {
+        const isPlaying = event.data === YT.PlayerState.PLAYING;
+        soundButton.innerHTML = isPlaying ? '<span>❚❚</span>' : '<span>▶</span>';
+        soundButton.setAttribute('aria-label', isPlaying ? 'Jeda soundtrack' : 'Putar soundtrack');
+        soundBars.classList.toggle('paused', !isPlaying);
+      }
+
+      function toggleSoundtrack() {
+        if (!soundtrackPlayer || typeof soundtrackPlayer.getPlayerState !== 'function') return;
+        if (soundtrackPlayer.getPlayerState() === YT.PlayerState.PLAYING) {
+          soundtrackPlayer.pauseVideo();
+          clearInterval(soundtrackTimer);
+          return;
+        }
+        triggerAudioPlayback();
+      }
+
+      soundButton.addEventListener('click', toggleSoundtrack);
+
+      let denyCount = 0;
+      let acceptScale = 1.0;
+      let denyScale = 1.0;
+      let denyMessages = [
+        "Yakin mau nolak? 🥺",
+        "Hmm... coba pikir lagi 😭",
+        "Masa tega sih? 🥺",
+        "Aku kasih kesempatan kedua deh ❤️",
+        "Serius mau nolak aku? 😭",
+        "Jangan gitu donggg 😭💕",
+        "Hehehe 😝",
+        "Nggak boleh 😜"
+      ];
+
+      function createFloatingElement(type, container) {
+        const el = document.createElement('div');
+        const symbols = type === 'heart' ? ['❤️','💗','💕','💖','💘','💝'] :
+                        type === 'sparkle' ? ['✨','⭐','🌟','💫'] :
+                        ['🎉','🎊','💜','💛','🩷','🩵'];
+        el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        el.className = type === 'heart' ? 'bg-heart' : type === 'sparkle' ? 'bg-sparkle' : 'bg-confetti';
+        el.style.left = Math.random() * 100 + '%';
+        el.style.fontSize = (type === 'confetti' ? 18 : 22) + Math.floor(Math.random() * 20) + 'px';
+        el.style.animationDuration = (6 + Math.random() * 10) + 's';
+        el.style.animationDelay = Math.random() * 8 + 's';
+        container.appendChild(el);
+        setTimeout(() => {
+          if (el.parentNode) el.remove();
+        }, 15000);
+      }
+
+      function generateInitialBackground(count = 20) {
+        for (let i = 0; i < count; i++) {
+          const type = Math.random() > 0.5 ? 'heart' : (Math.random() > 0.5 ? 'sparkle' : 'confetti');
+          createFloatingElement(type, bgElements);
+        }
+      }
+
+      function startBackgroundLoop() {
+        setInterval(() => {
+          const type = Math.random() > 0.5 ? 'heart' : (Math.random() > 0.5 ? 'sparkle' : 'confetti');
+          createFloatingElement(type, bgElements);
+          if (bgElements.children.length > 50) {
+            for (let i = 0; i < 10; i++) {
+              if (bgElements.firstChild) bgElements.removeChild(bgElements.firstChild);
+            }
+          }
+        }, 500);
+      }
+
+      function shakeCard() {
+        card.classList.add('shake');
+        setTimeout(() => card.classList.remove('shake'), 500);
+      }
+
+      function bounceCharacter() {
+        characterBox.classList.add('bounce-char');
+        setTimeout(() => characterBox.classList.remove('bounce-char'), 600);
+      }
+
+      function updateButtonSizes() {
+        btnAccept.style.transform = `scale(${acceptScale})`;
+        btnDeny.style.transform = `scale(${denyScale})`;
+        btnAccept.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        btnDeny.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+      }
+
+      function handleDenyClick(event) {
+        event.preventDefault();
+        triggerAudioPlayback();
+        denyCount++;
+
+        const randomMsg = denyMessages[Math.floor(Math.random() * denyMessages.length)];
+        denyMessage.textContent = randomMsg;
+        denyMessage.style.opacity = '1';
+        
+        if (denyCount === 1) {
+          characterBox.textContent = '😳';
+        } else if (denyCount === 2) {
+          characterBox.textContent = '🥺';
+        } else if (denyCount >= 3 && denyCount <= 5) {
+          characterBox.textContent = '😭';
+        } else {
+          characterBox.textContent = '😭💔';
+        }
+        bounceCharacter();
+
+        if (denyCount <= 5) {
+          if (denyCount === 1) { acceptScale = 1.1; denyScale = 0.9; }
+          else if (denyCount === 2) { acceptScale = 1.25; denyScale = 0.75; }
+          else if (denyCount === 3) { acceptScale = 1.5; denyScale = 0.6; }
+          else if (denyCount === 4) { acceptScale = 1.8; denyScale = 0.4; }
+          else if (denyCount === 5) { acceptScale = 2.2; denyScale = 0.2; }
+        } else {
+          acceptScale = 2.6;
+          denyScale = 0.05;
+          btnDeny.classList.add('fade-out');
+          setTimeout(() => {
+            btnDeny.style.display = 'none';
+          }, 400);
         }
 
-        window.addEventListener('mouseout', resetCard);
-        window.addEventListener('touchend', resetCard);
-        window.addEventListener('mouseover', () => card.style.transition = 'transform 0.1s ease-out');
-        window.addEventListener('touchstart', () => card.style.transition = 'transform 0.1s ease-out');
-    </script>
+        updateButtonSizes();
+        shakeCard();
 
+        for (let i = 0; i < 6; i++) {
+          createFloatingElement('heart', bgElements);
+          createFloatingElement('confetti', bgElements);
+        }
+
+        if (denyCount >= 2 && denyCount <= 5 && btnDeny.style.display !== 'none') {
+          const moveX = (Math.random() * 30 - 15);
+          const moveY = (Math.random() * 10 - 5);
+          btnDeny.style.transform = `translate(${moveX}px, ${moveY}px) scale(${denyScale})`;
+          setTimeout(() => {
+            btnDeny.style.transform = `translate(0px, 0px) scale(${denyScale})`;
+          }, 200);
+        }
+
+        if (denyCount > 6) {
+          btnDeny.style.display = 'none';
+          btnDeny.classList.add('fade-out');
+        }
+      }
+
+      function handleAcceptClick() {
+        triggerAudioPlayback();
+        btnGroup.classList.add('hidden');
+        denyMessage.textContent = '';
+        
+        characterBox.textContent = '🥰💖';
+        bounceCharacter();
+        card.classList.add('zoom-in');
+
+        mainTitle.textContent = 'YEEEAYYY!!! ❤️🥰';
+        subTitle.textContent = '';
+        questionText.innerHTML = 'Aku tahu kamu nggak akan tega nolak aku 😝💕';
+
+        spawnBigCelebration();
+
+        setTimeout(() => {
+          questionText.innerHTML = 'Makasih sudah memilih aku ❤️';
+          subTitle.textContent = CONFIG.pesanPenutup;
+          
+          const giftBtn = document.createElement('button');
+          giftBtn.className = 'btn gift-btn';
+          giftBtn.textContent = '🎁 Klik untuk kejutan terakhir';
+          giftBtn.id = 'giftButton';
+          giftBtn.addEventListener('click', handleGiftSurprise);
+          btnGroup.innerHTML = '';
+          btnGroup.appendChild(giftBtn);
+          btnGroup.classList.remove('hidden');
+        }, 2500);
+
+        if (btnDeny) btnDeny.style.display = 'none';
+      }
+
+      function spawnBigCelebration() {
+        for (let i = 0; i < 30; i++) {
+          const heart = document.createElement('div');
+          heart.className = 'big-heart';
+          heart.textContent = ['❤️','💗','💕','💖','💘','💝','✨','🎉'][Math.floor(Math.random()*8)];
+          heart.style.left = Math.random() * 100 + '%';
+          heart.style.fontSize = (2 + Math.random() * 2.5) + 'rem';
+          heart.style.animationDuration = (2 + Math.random() * 2) + 's';
+          heart.style.animationDelay = Math.random() * 1.5 + 's';
+          bigHeartsContainer.appendChild(heart);
+          setTimeout(() => {
+            if (heart.parentNode) heart.remove();
+          }, 4000);
+        }
+        for (let i = 0; i < 15; i++) {
+          createFloatingElement('confetti', bgElements);
+          createFloatingElement('heart', bgElements);
+        }
+      }
+
+      function handleGiftSurprise() {
+        triggerAudioPlayback();
+        const giftBtn = document.getElementById('giftButton');
+        if (giftBtn) giftBtn.classList.add('hidden');
+        
+        const envelopeContainer = document.createElement('div');
+        envelopeContainer.className = 'envelope-container';
+        envelopeContainer.innerHTML = `
+          <div class="envelope-icon" style="font-size: 4rem; animation: envelopeOpen 1s ease;">💌</div>
+          <div class="final-message">Satu hal lagi...</div>
+          <div class="message-box" id="typingMessage" style="font-size:1.6rem; font-weight:600;"></div>
+        `;
+        card.appendChild(envelopeContainer);
+        
+        characterBox.textContent = '🤗💕';
+        
+        const textToType = CONFIG.akhirPesan;
+        const typingEl = document.getElementById('typingMessage');
+        let charIndex = 0;
+        function typeWriter() {
+          if (charIndex < textToType.length) {
+            typingEl.textContent += textToType.charAt(charIndex);
+            charIndex++;
+            setTimeout(typeWriter, 80);
+          } else {
+            typingEl.classList.add('typing-text');
+            spawnBigCelebration();
+          }
+        }
+        typeWriter();
+        
+        setTimeout(() => {
+          characterBox.textContent = '🥰🤗';
+          bounceCharacter();
+        }, 1000);
+      }
+
+      btnDeny.addEventListener('click', handleDenyClick);
+      btnAccept.addEventListener('click', handleAcceptClick);
+
+      generateInitialBackground(25);
+      startBackgroundLoop();
+
+      for (let i = 0; i < 8; i++) {
+        setTimeout(() => createFloatingElement('heart', bgElements), i * 300);
+      }
+    })();
+  </script>
 </body>
 </html>
