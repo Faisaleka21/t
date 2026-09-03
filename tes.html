@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio - Alief Sandya</title>
+    <style>
+        /* Pengaturan Dasar */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0b0f19;
+            overflow: hidden;
+            cursor: none; /* Kursor disembunyikan untuk desktop */
+        }
+
+        /* Efek Kursor Kustom Bercahaya (Desktop) */
+        #cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 242, 254, 0.4) 0%, rgba(0, 242, 254, 0) 60%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 10;
+            mix-blend-mode: screen;
+        }
+
+        #cursor-dot {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 10px;
+            height: 10px;
+            background-color: #fff;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 11;
+            box-shadow: 0 0 10px #fff, 0 0 20px #00f2fe;
+        }
+
+        /* Latar Belakang - Elemen Bercahaya */
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 1;
+            animation: floatShape 12s infinite ease-in-out;
+        }
+
+        .shape1 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #ff007f, #6b0fce);
+            top: 10%;
+            left: 15%;
+        }
+
+        .shape2 {
+            width: 450px;
+            height: 450px;
+            background: linear-gradient(135deg, #00f2fe, #4facfe);
+            bottom: -5%;
+            right: 10%;
+            animation-delay: -6s;
+        }
+
+        /* Container untuk Prespektif 3D */
+        .card-container {
+            perspective: 1500px;
+            z-index: 5;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Desain Kartu Glassmorphism */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 60px 80px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            text-align: center;
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+            width: 90%;
+            max-width: 550px; /* Batas maksimal lebar */
+        }
+
+        /* Teks dalam Kartu */
+        .glass-card h1 {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin: 0 0 15px 0;
+            transform: translateZ(40px);
+        }
+
+        .glass-card p.name {
+            font-size: 4rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(to right, #fff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transform: translateZ(80px);
+            text-shadow: 0 10px 20px rgba(0,0,0,0.1); /* Disesuaikan agar shadow tidak merusak clipping */
+        }
+
+        /* Animasi Melayang untuk Latar */
+        @keyframes floatShape {
+            0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+            50% { transform: translateY(-50px) scale(1.1) rotate(10deg); }
+        }
+
+        /* =========================================
+           PENGATURAN KHUSUS UNTUK HP (RESPONSIF)
+           ========================================= */
+        @media (max-width: 768px) {
+            .glass-card {
+                padding: 50px 30px;
+                border-radius: 20px;
+            }
+
+            .glass-card h1 {
+                font-size: 1rem;
+                letter-spacing: 3px;
+                transform: translateZ(30px); /* Jarak 3D dikurangi untuk HP */
+            }
+
+            .glass-card p.name {
+                font-size: 2.5rem; /* Ukuran font dikecilkan agar tidak keluar garis */
+                transform: translateZ(60px);
+            }
+
+            .shape1 {
+                width: 250px; height: 250px;
+                top: 5%; left: -10%;
+            }
+
+            .shape2 {
+                width: 300px; height: 300px;
+                bottom: 5%; right: -10%;
+            }
+        }
+
+        /* Menonaktifkan kursor kustom di perangkat Touchscreen (HP/Tablet) */
+        @media (pointer: coarse), (hover: none) {
+            #cursor, #cursor-dot {
+                display: none !important;
+            }
+            body {
+                cursor: auto; /* Mengembalikan kursor asli jika diperlukan */
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Kursor Kustom (Hanya tampil di Desktop) -->
+    <div id="cursor-dot"></div>
+    <div id="cursor"></div>
+
+    <!-- Bentuk Latar -->
+    <div class="shape shape1"></div>
+    <div class="shape shape2"></div>
+
+    <!-- Area Kartu -->
+    <div class="card-container">
+        <div class="glass-card" id="card">
+            <h1>Portofolio</h1>
+            <p class="name">Alief Sandya</p>
+        </div>
+    </div>
+
+    <!-- Skrip untuk Interaksi -->
+    <script>
+        const card = document.getElementById('card');
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorGlow = document.getElementById('cursor');
+
+        // Fungsi utama untuk memutar kartu (Bisa dari mouse atau sentuhan)
+        function animateCard(clientX, clientY) {
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+
+            // Efek rotasi
+            const rotateX = ((clientY - centerY) / centerY) * -15; 
+            const rotateY = ((clientX - centerX) / centerX) * 15;  
+
+            card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        }
+
+        // ==========================
+        // 1. KONTROL UNTUK DESKTOP (MOUSE)
+        // ==========================
+        window.addEventListener('mousemove', (e) => {
+            // Animasi Kursor
+            if (window.matchMedia("(pointer: fine)").matches) {
+                cursorDot.style.left = `${e.clientX}px`;
+                cursorDot.style.top = `${e.clientY}px`;
+                
+                cursorGlow.animate({
+                    left: `${e.clientX}px`,
+                    top: `${e.clientY}px`
+                }, { duration: 500, fill: "forwards" });
+            }
+
+            // Animasi Kartu 3D
+            animateCard(e.clientX, e.clientY);
+        });
+
+        // ==========================
+        // 2. KONTROL UNTUK HP (TOUCH SCREEN)
+        // ==========================
+        window.addEventListener('touchmove', (e) => {
+            // Mencegah layar scroll saat menggesek kartu
+            if (e.target.closest('.glass-card')) {
+                e.preventDefault(); 
+            }
+            
+            const touch = e.touches[0];
+            animateCard(touch.clientX, touch.clientY);
+        }, { passive: false });
+
+        // ==========================
+        // RESET POSISI SAAT KURSOR / JARI DILEPAS
+        // ==========================
+        function resetCard() {
+            card.style.transform = `rotateX(0deg) rotateY(0deg)`;
+            card.style.transition = 'transform 0.5s ease';
+        }
+
+        window.addEventListener('mouseout', resetCard);
+        window.addEventListener('touchend', resetCard);
+
+        // Mengembalikan transisi cepat
+        window.addEventListener('mouseover', () => card.style.transition = 'transform 0.1s ease-out');
+        window.addEventListener('touchstart', () => card.style.transition = 'transform 0.1s ease-out');
+    </script>
+
+</body>
+</html>
