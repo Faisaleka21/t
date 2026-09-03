@@ -175,6 +175,30 @@
       filter: drop-shadow(0 10px 12px rgba(0,0,0,0.06));
     }
 
+    .character-box.celebration-row {
+      width: 100%;
+      height: 92px;
+      gap: clamp(0.4rem, 2vw, 1rem);
+      font-size: clamp(3rem, 10vw, 5rem);
+      white-space: nowrap;
+    }
+
+    .celebration-row span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 1.1em;
+      animation: celebrationPop 0.7s both;
+    }
+
+    .celebration-row span:nth-child(2) { animation-delay: 0.12s; }
+    .celebration-row span:nth-child(3) { animation-delay: 0.24s; }
+
+    @keyframes celebrationPop {
+      from { opacity: 0; transform: translateY(14px) scale(0.7); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
     .character-box.bounce-char {
       animation: charBounce 0.6s ease;
     }
@@ -251,6 +275,7 @@
       transform: scale(1);
       will-change: transform, opacity;
       touch-action: manipulation;
+      text-decoration: none;
     }
 
     .btn-accept {
@@ -267,6 +292,15 @@
       box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
       font-size: 1.15rem;
       padding: 0.85rem 1.6rem;
+    }
+
+    .btn-wa {
+      background: linear-gradient(135deg, #25d366, #128c7e);
+      color: white;
+      box-shadow: 0 10px 22px rgba(37, 211, 102, 0.35);
+      font-size: 1.2rem;
+      padding: 1rem 2.2rem;
+      margin-top: 1rem;
     }
 
     .btn:hover {
@@ -327,7 +361,7 @@
     .big-heart {
       position: absolute;
       bottom: 0;
-      font-size: 2.5rem;
+      font-size: 1.8rem;
       animation: bigHeartUp 3s ease-in forwards;
       will-change: transform, opacity;
     }
@@ -437,6 +471,7 @@
         height: 100px;
         font-size: 4.5rem;
       }
+      .character-box.celebration-row { height: 76px; font-size: 3.3rem; }
       .sub-text { font-size: 1.05rem; }
       .message-box { min-height: 58px; font-size: 1.05rem; line-height: 1.5; }
       .btn-group { flex-direction: column; gap: 0.9rem; }
@@ -456,7 +491,7 @@
       🥰
     </div>
 
-    <h1 id="mainTitle">Hai kamu... ❤️</h1>
+    <h1 id="mainTitle">Hai Nunn💗💗</h1>
     <div class="sub-text" id="subTitle">Aku punya sesuatu yang mau aku tanyain nih...</div>
     <div class="message-box" id="questionText">Maukah kamu jadi orang yang selalu nemenin aku? 🥺💕</div>
 
@@ -484,6 +519,7 @@
     (function() {
       const CONFIG = {
         namaPanggilan: 'kamu',
+        noWhatsApp: '+6281217803349', // <-- Ganti dengan nomor WhatsApp kamu (contoh: 6281234567890)
         pesanPenutup: 'Semoga kita selalu bisa saling menemani, saling support, dan membuat banyak cerita indah bersama. 💕',
         akhirPesan: 'Aku sayang kamu. ❤️'
       };
@@ -513,9 +549,7 @@
           videoId: '3UdVruU2qGc',
           playerVars: { start: soundtrackStart, end: soundtrackEnd, controls: 0, rel: 0, playsinline: 1 },
           events: { 
-            onReady: () => {
-              // Siap diputar lewat interaksi user
-            }, 
+            onReady: () => {}, 
             onStateChange: updateSoundState 
           }
         });
@@ -698,11 +732,12 @@
         btnGroup.classList.add('hidden');
         denyMessage.textContent = '';
         
-        characterBox.textContent = '🥰💖';
+        characterBox.innerHTML = '<span>🥰</span><span>💖</span><span>🥰</span>';
+        characterBox.classList.add('celebration-row');
         bounceCharacter();
         card.classList.add('zoom-in');
 
-        mainTitle.textContent = 'YEEEAYYY!!! ❤️🥰';
+        mainTitle.textContent = 'YEEEAYYY!!!';
         subTitle.textContent = '';
         questionText.innerHTML = 'Aku tahu kamu nggak akan tega nolak aku 😝💕';
 
@@ -749,6 +784,9 @@
         triggerAudioPlayback();
         const giftBtn = document.getElementById('giftButton');
         if (giftBtn) giftBtn.classList.add('hidden');
+
+        const whatsappNumber = CONFIG.noWhatsApp.replace(/\D/g, '');
+        const whatsappMessage = encodeURIComponent('Aku terima ya, ganteng \u2764\uFE0F \uD83D\uDE0D');
         
         const envelopeContainer = document.createElement('div');
         envelopeContainer.className = 'envelope-container';
@@ -756,10 +794,14 @@
           <div class="envelope-icon" style="font-size: 4rem; animation: envelopeOpen 1s ease;">💌</div>
           <div class="final-message">Satu hal lagi...</div>
           <div class="message-box" id="typingMessage" style="font-size:1.6rem; font-weight:600;"></div>
+          <a href="https://wa.me/${whatsappNumber}?text=${whatsappMessage}" target="_blank" rel="noopener noreferrer" class="btn btn-wa">
+            💬 Jawab via WhatsApp
+          </a>
         `;
         card.appendChild(envelopeContainer);
         
-        characterBox.textContent = '🤗💕';
+        characterBox.classList.remove('celebration-row');
+        characterBox.textContent = '';
         
         const textToType = CONFIG.akhirPesan;
         const typingEl = document.getElementById('typingMessage');
@@ -777,7 +819,7 @@
         typeWriter();
         
         setTimeout(() => {
-          characterBox.textContent = '🥰🤗';
+          characterBox.textContent = '🥰';
           bounceCharacter();
         }, 1000);
       }
