@@ -18,19 +18,22 @@
             justify-content: center;
             align-items: center;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0b0f19;
+            background-color: #0a0505; /* Latar hitam kemerahan gelap */
             overflow: hidden;
-            cursor: none; /* Kursor disembunyikan untuk desktop */
+            cursor: none; 
         }
 
-        /* Efek Kursor Kustom Bercahaya (Desktop) */
+        /* =========================================
+           EFEK KURSOR API NAGA (DESKTOP)
+           ========================================= */
         #cursor {
             position: fixed;
             top: 0;
             left: 0;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(0, 242, 254, 0.4) 0%, rgba(0, 242, 254, 0) 60%);
+            width: 250px;
+            height: 250px;
+            /* Cahaya api (merah ke oranye) */
+            background: radial-gradient(circle, rgba(255, 69, 0, 0.3) 0%, rgba(255, 0, 0, 0) 70%);
             border-radius: 50%;
             transform: translate(-50%, -50%);
             pointer-events: none;
@@ -42,43 +45,63 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 10px;
-            height: 10px;
-            background-color: #fff;
+            width: 12px;
+            height: 12px;
+            background-color: #ffdd00; /* Inti api berwarna kuning terang */
             border-radius: 50%;
             transform: translate(-50%, -50%);
             pointer-events: none;
-            z-index: 11;
-            box-shadow: 0 0 10px #fff, 0 0 20px #00f2fe;
+            z-index: 12;
+            box-shadow: 0 0 10px #ffea00, 0 0 20px #ff4500, 0 0 40px #ff0000;
         }
 
-        /* Latar Belakang - Elemen Bercahaya */
+        /* Partikel Jejak Api */
+        .fire-particle {
+            position: fixed;
+            border-radius: 50%;
+            background: radial-gradient(circle, #ffeb3b 0%, #ff9800 40%, #f44336 80%, transparent 100%);
+            pointer-events: none;
+            mix-blend-mode: screen;
+            z-index: 11;
+            animation: burn 0.6s ease-out forwards;
+        }
+
+        @keyframes burn {
+            0% { transform: scale(1) translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: scale(0) translateY(-60px) rotate(45deg); opacity: 0; }
+        }
+
+        /* =========================================
+           LATAR BELAKANG (AURA MEMBARA)
+           ========================================= */
         .shape {
             position: absolute;
             border-radius: 50%;
-            filter: blur(80px);
+            filter: blur(90px);
             z-index: 1;
-            animation: floatShape 12s infinite ease-in-out;
+            animation: floatShape 10s infinite ease-in-out;
         }
 
         .shape1 {
-            width: 400px;
-            height: 400px;
-            background: linear-gradient(135deg, #ff007f, #6b0fce);
-            top: 10%;
-            left: 15%;
+            width: 450px;
+            height: 450px;
+            background: linear-gradient(135deg, #ff0844, #ffb199);
+            top: 5%;
+            left: 10%;
         }
 
         .shape2 {
-            width: 450px;
-            height: 450px;
-            background: linear-gradient(135deg, #00f2fe, #4facfe);
-            bottom: -5%;
-            right: 10%;
-            animation-delay: -6s;
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #f12711, #f5af19);
+            bottom: -10%;
+            right: 5%;
+            animation-delay: -5s;
         }
 
-        /* Container untuk Prespektif 3D */
+        /* =========================================
+           KARTU GLASSMORPHISM 3D
+           ========================================= */
         .card-container {
             perspective: 1500px;
             z-index: 5;
@@ -87,163 +110,166 @@
             justify-content: center;
         }
 
-        /* Desain Kartu Glassmorphism */
         .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(20, 5, 5, 0.4); /* Kaca dengan tint merah gelap */
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 100, 100, 0.2);
             border-radius: 24px;
-            padding: 60px 80px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            padding: 70px 90px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6),
+                        inset 0 1px 0 rgba(255, 200, 200, 0.2);
             text-align: center;
             transform-style: preserve-3d;
             transition: transform 0.1s ease-out;
             width: 90%;
-            max-width: 550px; /* Batas maksimal lebar */
+            max-width: 600px;
         }
 
-        /* Teks dalam Kartu */
-        .glass-card h1 {
-            font-size: 1.5rem;
-            color: rgba(255, 255, 255, 0.7);
+        /* Copywriting / Teks */
+        .badge {
+            display: inline-block;
+            font-size: 0.9rem;
+            color: #ff9800;
             text-transform: uppercase;
-            letter-spacing: 5px;
-            margin: 0 0 15px 0;
-            transform: translateZ(40px);
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            padding: 8px 15px;
+            border-radius: 30px;
+            background: rgba(255, 69, 0, 0.1);
+            border: 1px solid rgba(255, 69, 0, 0.3);
+            transform: translateZ(50px);
         }
 
         .glass-card p.name {
-            font-size: 4rem;
-            font-weight: 800;
-            margin: 0;
-            background: linear-gradient(to right, #fff, #a5b4fc);
+            font-size: 4.5rem;
+            font-weight: 900;
+            margin: 0 0 15px 0;
+            background: linear-gradient(to right, #ffffff, #ffb199, #ff0844);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            transform: translateZ(80px);
-            text-shadow: 0 10px 20px rgba(0,0,0,0.1); /* Disesuaikan agar shadow tidak merusak clipping */
+            transform: translateZ(90px);
+            text-shadow: 0 15px 30px rgba(0,0,0,0.4);
         }
 
-        /* Animasi Melayang untuk Latar */
+        .tagline {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            letter-spacing: 1px;
+            line-height: 1.6;
+            transform: translateZ(60px);
+        }
+
         @keyframes floatShape {
             0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
-            50% { transform: translateY(-50px) scale(1.1) rotate(10deg); }
+            50% { transform: translateY(-30px) scale(1.05) rotate(5deg); }
         }
 
         /* =========================================
-           PENGATURAN KHUSUS UNTUK HP (RESPONSIF)
+           RESPONSIF (UNTUK HP)
            ========================================= */
         @media (max-width: 768px) {
-            .glass-card {
-                padding: 50px 30px;
-                border-radius: 20px;
-            }
-
-            .glass-card h1 {
-                font-size: 1rem;
-                letter-spacing: 3px;
-                transform: translateZ(30px); /* Jarak 3D dikurangi untuk HP */
-            }
-
-            .glass-card p.name {
-                font-size: 2.5rem; /* Ukuran font dikecilkan agar tidak keluar garis */
-                transform: translateZ(60px);
-            }
-
-            .shape1 {
-                width: 250px; height: 250px;
-                top: 5%; left: -10%;
-            }
-
-            .shape2 {
-                width: 300px; height: 300px;
-                bottom: 5%; right: -10%;
-            }
+            .glass-card { padding: 50px 30px; border-radius: 20px; }
+            .badge { font-size: 0.7rem; transform: translateZ(30px); }
+            .glass-card p.name { font-size: 3rem; transform: translateZ(60px); }
+            .tagline { font-size: 0.9rem; transform: translateZ(40px); }
+            .shape1 { width: 250px; height: 250px; top: 0; left: -10%; }
+            .shape2 { width: 300px; height: 300px; bottom: 0; right: -10%; }
         }
 
-        /* Menonaktifkan kursor kustom di perangkat Touchscreen (HP/Tablet) */
+        /* Nonaktifkan Kursor Khusus di HP */
         @media (pointer: coarse), (hover: none) {
-            #cursor, #cursor-dot {
-                display: none !important;
-            }
-            body {
-                cursor: auto; /* Mengembalikan kursor asli jika diperlukan */
-            }
+            #cursor, #cursor-dot, .fire-particle { display: none !important; }
+            body { cursor: auto; }
         }
     </style>
 </head>
 <body>
     
-    <!-- Kursor Kustom (Hanya tampil di Desktop) -->
     <div id="cursor-dot"></div>
     <div id="cursor"></div>
 
-    <!-- Bentuk Latar -->
     <div class="shape shape1"></div>
     <div class="shape shape2"></div>
 
-    <!-- Area Kartu -->
     <div class="card-container">
         <div class="glass-card" id="card">
-            <h1>Portofolio</h1>
+            <span class="badge">✦ The Digital Craftsman ✦</span>
             <p class="name">Alief Sandya</p>
+            <p class="tagline">Mengubah percikan ide menjadi realitas digital yang membara. Merancang masa depan baris demi baris.</p>
         </div>
     </div>
 
-    <!-- Skrip untuk Interaksi -->
     <script>
         const card = document.getElementById('card');
         const cursorDot = document.getElementById('cursor-dot');
         const cursorGlow = document.getElementById('cursor');
 
-        // Fungsi utama untuk memutar kartu (Bisa dari mouse atau sentuhan)
+        // Fungsi Rotasi 3D
         function animateCard(clientX, clientY) {
             const centerX = window.innerWidth / 2;
             const centerY = window.innerHeight / 2;
-
-            // Efek rotasi
             const rotateX = ((clientY - centerY) / centerY) * -15; 
             const rotateY = ((clientX - centerX) / centerX) * 15;  
-
             card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
         }
 
-        // ==========================
-        // 1. KONTROL UNTUK DESKTOP (MOUSE)
-        // ==========================
+        // Fungsi Membuat Partikel Api
+        function createFireParticle(x, y) {
+            const particle = document.createElement('div');
+            particle.className = 'fire-particle';
+            
+            // Ukuran partikel acak agar terlihat seperti kobaran api alami
+            const size = Math.random() * 20 + 10; 
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            
+            // Posisi di tengah kursor
+            particle.style.left = `${x - size / 2}px`;
+            particle.style.top = `${y - size / 2}px`;
+            
+            document.body.appendChild(particle);
+            
+            // Hapus partikel setelah animasinya selesai
+            setTimeout(() => {
+                particle.remove();
+            }, 600);
+        }
+
+        // Variabel untuk mengontrol seberapa sering partikel keluar (agar tidak lag)
+        let lastParticleTime = 0;
+
+        // Kontrol Mouse (Desktop)
         window.addEventListener('mousemove', (e) => {
-            // Animasi Kursor
             if (window.matchMedia("(pointer: fine)").matches) {
+                // Pergerakan Kursor Inti
                 cursorDot.style.left = `${e.clientX}px`;
                 cursorDot.style.top = `${e.clientY}px`;
                 
+                // Pergerakan Glow
                 cursorGlow.animate({
                     left: `${e.clientX}px`,
                     top: `${e.clientY}px`
-                }, { duration: 500, fill: "forwards" });
-            }
+                }, { duration: 400, fill: "forwards" });
 
-            // Animasi Kartu 3D
+                // Generate Partikel Api (Dibatasi waktu agar performa tetap ringan)
+                const currentTime = Date.now();
+                if (currentTime - lastParticleTime > 20) { // Keluarkan partikel setiap 20ms
+                    createFireParticle(e.clientX, e.clientY);
+                    lastParticleTime = currentTime;
+                }
+            }
             animateCard(e.clientX, e.clientY);
         });
 
-        // ==========================
-        // 2. KONTROL UNTUK HP (TOUCH SCREEN)
-        // ==========================
+        // Kontrol Sentuh (HP)
         window.addEventListener('touchmove', (e) => {
-            // Mencegah layar scroll saat menggesek kartu
-            if (e.target.closest('.glass-card')) {
-                e.preventDefault(); 
-            }
-            
+            if (e.target.closest('.glass-card')) e.preventDefault(); 
             const touch = e.touches[0];
             animateCard(touch.clientX, touch.clientY);
         }, { passive: false });
 
-        // ==========================
-        // RESET POSISI SAAT KURSOR / JARI DILEPAS
-        // ==========================
+        // Reset Posisi
         function resetCard() {
             card.style.transform = `rotateX(0deg) rotateY(0deg)`;
             card.style.transition = 'transform 0.5s ease';
@@ -251,8 +277,6 @@
 
         window.addEventListener('mouseout', resetCard);
         window.addEventListener('touchend', resetCard);
-
-        // Mengembalikan transisi cepat
         window.addEventListener('mouseover', () => card.style.transition = 'transform 0.1s ease-out');
         window.addEventListener('touchstart', () => card.style.transition = 'transform 0.1s ease-out');
     </script>
